@@ -40,3 +40,19 @@ with open("campaigns.csv", "r") as data:
 
     #Closing the connection
     conn.close()
+
+# Open the csv file, read it and save the content in the search_terms variable
+with open("search_terms.csv", "r") as data:
+    search_terms = csv.reader(data)
+
+    # SQL query to insert data into search_terms table
+    insert_content = "INSERT INTO search_terms (date,ad_group_id,campaign_id,clicks,cost,conversion_value,conversions,search_term) VALUES(?,?,?,?,?,?,?,?)"
+
+    # Import content of search_terms.csv into database
+    cursor.executemany(insert_content, search_terms)
+
+    #Commiting the changes
+    conn.commit()
+
+    #Closing the connection
+    conn.close()
