@@ -43,3 +43,7 @@ class Campaign(Resource):
                 #Closing the connection
                 conn.close()
                 return jsonify(topTen)
+            else:
+                return({'message': 'Missing authentication'}), 401
+        else:
+            return({'message':'Missing authentication header'}), 401
