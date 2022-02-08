@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import sqlite3
 from flask_restx import Api, Resource
 from werkzeug.middleware.proxy_fix import ProxyFix
+import os
 
 # Configure application and Api
 app = Flask(__name__)
@@ -9,19 +10,19 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 # Authentication required
 authorizations = {
-    'api': {
+    os.environ.get('secret'): {
         'type': 'apiKey',
         'in': 'header',
         'name': 'X-API-KEY'
     }
 }
-api = Api(app, authorizations=authorizations, security='api', version='1.0', title='Bidnamic', description='Top 10 Search Terms by ROAS for a campaign structure_value or adgroup alias.')
+api = Api(app, authorizations=authorizations, security=os.environ.get('secret'), version='1.0', title='Bidnamic', description='Top 10 Search Terms by ROAS for a campaign structure_value or adgroup alias.')
 ns = api.namespace('Data', description='Top 10 Search Terms by ROAS')
 
 # Define campaign route and the placeholder for a structure value
 @ns.route("/campaign/<string:structure_value>")
 class Campaign(Resource):
-    @api.doc(security='api')
+    @api.doc(security=os.environ.get('secret'))
     def get(self, structure_value):
 
         """ Returns the Top 10 Search Terms by ROAS for a campaign structure_value """
@@ -29,7 +30,7 @@ class Campaign(Resource):
         # Check if the header exists
         if 'X-API-KEY' in request.headers:
             # Check if the header has the specific value
-            if request.headers['X-API-KEY'] == 'api':
+            if request.headers['X-API-KEY'] == os.environ.get('secret'):
 
                 # Connect to the database
                 conn = sqlite3.connect('files.db')
