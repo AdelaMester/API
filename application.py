@@ -26,14 +26,19 @@ class Campaign(Resource):
 
         """ Returns the Top 10 Search Terms by ROAS for a campaign structure_value """
 
-        # Connect to the database
-        conn = sqlite3.connect('files.db')
+        # Check if the header exists
+        if 'X-API-KEY' in request.headers:
+            # Check if the header has the specific value
+            if request.headers['X-API-KEY'] == 'api':
 
-        # Create a cursor object to execute queries on the database
-        cursor = conn.cursor()
-        cursor.execute("SELECT DISTINCT conversion_value / cost AS roas, search_terms.search_term FROM search_terms JOIN campaigns ON search_terms.campaign_id = campaigns.campaign_id WHERE conversion_value !=0 AND cost != 0 AND campaigns.structure_value=? ORDER BY roas DESC LIMIT 10", (structure_value,))
-        topTen = cursor.fetchall()
+                # Connect to the database
+                conn = sqlite3.connect('files.db')
 
-        #Closing the connection
-        conn.close()
-        return jsonify(topTen)
+                # Create a cursor object to execute queries on the database
+                cursor = conn.cursor()
+                cursor.execute("SELECT DISTINCT conversion_value / cost AS roas, search_terms.search_term FROM search_terms JOIN campaigns ON search_terms.campaign_id = campaigns.campaign_id WHERE conversion_value !=0 AND cost != 0 AND campaigns.structure_value=? ORDER BY roas DESC LIMIT 10", (structure_value,))
+                topTen = cursor.fetchall()
+
+                #Closing the connection
+                conn.close()
+                return jsonify(topTen)
