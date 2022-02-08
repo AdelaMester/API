@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import sqlite3
 from flask_restx import Api, Resource
 from werkzeug.middleware.proxy_fix import ProxyFix
