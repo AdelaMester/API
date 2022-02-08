@@ -25,3 +25,18 @@ with open("adgroups.csv", "r") as data:
     #Closing the connection
     conn.close()
 
+# Open the csv file, read it and save the content in the campaigns variable
+with open("campaigns.csv", "r") as data:
+    campaigns = csv.reader(data)
+
+    # SQL query to insert data into campaigns table
+    insert_content = "INSERT INTO campaigns (campaign_id,structure_value,status) VALUES(?,?,?)"
+
+    # Import content of campaigns.csv into database
+    cursor.executemany(insert_content, campaigns)
+
+    #Commiting the changes
+    conn.commit()
+
+    #Closing the connection
+    conn.close()
