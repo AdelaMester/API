@@ -1,4 +1,4 @@
-# Bidnamic
+# Flask API 
 
 Created API and saved csv files to database.
 
