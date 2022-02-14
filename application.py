@@ -16,7 +16,7 @@ authorizations = {
         'name': 'X-API-KEY'
     }
 }
-api = Api(app, authorizations=authorizations, security=os.environ.get('secret'), version='1.0', title='Flask-API', description='Top 10 Search Terms by ROAS for a campaign structure_value or adgroup alias.')
+api = Api(app, authorizations=authorizations, security=os.environ.get('secret'), version='1.0', title='API', description='Top 10 Search Terms by ROAS for a campaign structure_value or adgroup alias.')
 ns = api.namespace('Data', description='Top 10 Search Terms by ROAS')
 
 # Define campaign route and the placeholder for a structure value
