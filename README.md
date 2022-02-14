@@ -12,5 +12,5 @@ Created API and saved csv files to database.
 ```flask run```
 
 ## App deployed with Heroku
-[API link to Heroku](https://bidnamic.herokuapp.com/)
+[API link to Heroku](https://fflask-api.herokuapp.com/)
 
